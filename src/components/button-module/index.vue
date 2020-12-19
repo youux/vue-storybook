@@ -1,27 +1,22 @@
 <template>
-  <button type="button" :class="classes" @click="onClick" :style="style">{{ label }}</button>
+  <button type="button" :class="classes" @click="onClick" :style="style">
+    <slot></slot>
+  </button>
 </template>
 
 <script>
 
 export default {
   name: 'button-module',
-
   props: {
-    label: {
-      type: String,
-      required: true
-    },
-    primary: {
+    type: {
       type: Boolean,
       default: false
     },
     size: {
       type: String,
       default: 'medium',
-      validator: function (value) {
-        return ['small', 'medium', 'large'].indexOf(value) !== -1
-      }
+      validator: (value) => ['small', 'medium', 'large'].indexOf(value) !== -1
     },
     backgroundColor: {
       type: String
@@ -31,10 +26,10 @@ export default {
   computed: {
     classes () {
       return {
-        'storybook-button': true,
-        'storybook-button--primary': this.primary,
-        'storybook-button--secondary': !this.primary,
-        [`storybook-button--${this.size}`]: true
+        'vue-button': true,
+        'vue-button-secondary': !this.type,
+        [`vue-button-${this.type}`]: this.type,
+        [`vue-button-${this.size}`]: true
       }
     },
     style () {
@@ -54,7 +49,7 @@ export default {
 
 <style lang="scss" scoped>
 .storybook-button {
-  font-family: 'Nunito Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: "Nunito Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 700;
   line-height: 1;
   display: inline-block;
@@ -62,26 +57,33 @@ export default {
   border: 0;
   border-radius: 3em;
 }
-.storybook-button--primary {
+.storybook-button-primary {
   color: white;
   background-color: #1ea7fd;
 }
-.storybook-button--secondary {
+.storybook-button-error {
+  color: white;
+  background-color: #ed4014;
+}
+.storybook-button-success {
+  color: white;
+  background-color: #19be6b;
+}
+.storybook-button-secondary {
   color: #333;
   background-color: transparent;
-  box-shadow: rgba(0, 0, 0, .15) 0 0 0 1px inset;
+  box-shadow: rgba(0, 0, 0, 0.15) 0 0 0 1px inset;
 }
-.storybook-button--small {
+.storybook-button-small {
   font-size: 12px;
   padding: 10px 16px;
 }
-.storybook-button--medium {
+.storybook-button-medium {
   font-size: 14px;
   padding: 11px 20px;
 }
-.storybook-button--large {
+.storybook-button-large {
   font-size: 16px;
   padding: 12px 24px;
 }
-
 </style>
