@@ -1,4 +1,4 @@
-# vue-demo1
+# vue-storybook
 
 ## Project setup
 ```
